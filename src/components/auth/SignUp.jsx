@@ -32,8 +32,8 @@ return (
           <input className="password" type="password" 
           {...register('Password', {
           required: true,
-          maxLength: 11,
-          minLength: 8
+          maxLength: 20,
+          minLength: 3
         })}
            />
         </label>

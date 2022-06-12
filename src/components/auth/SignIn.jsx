@@ -25,8 +25,8 @@ return (
         <span className="input__heading">Password</span>
         <input name="password" type="text" {...register('Password', {
           required: "Password is required.",
-          maxLength: 11,
-          minLength: 8
+          maxLength: 20,
+          minLength: 3
         })} />
       </label>
       <button className="button" type="submit">Sign In</button>
