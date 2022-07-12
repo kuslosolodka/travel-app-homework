@@ -22,7 +22,7 @@ export const signupUser = createAsyncThunk(
       let data = await response.json();
       console.log("data", data);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         localStorage.setItem("token", data.token);
         return { ...data, fullName: fullName, email: email };
       } else {
@@ -123,7 +123,7 @@ export const userSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.email = payload.user.email;
-      state.username = payload.user.username;
+      state.fullName = payload.user.fullName;
     },
     [signupUser.pending]: (state) => {
       state.isFetching = true;
@@ -135,7 +135,7 @@ export const userSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, { payload }) => {
       state.email = payload.email;
-      state.username = payload.username;
+      state.username = payload.fullName;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
@@ -157,7 +157,7 @@ export const userSlice = createSlice({
       state.isSuccess = true;
 
       state.email = payload.email;
-      state.username = payload.username;
+      state.username = payload.fullName;
     },
     [fetchUserBytoken.rejected]: (state) => {
       console.log("fetchUserBytoken");
