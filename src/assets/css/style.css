@@ -489,6 +489,7 @@ select {
   flex-direction: column;
   gap: 15px;
   padding: 20px 30px;
+  margin-top: auto;
 }
 
 /* trip-page */
