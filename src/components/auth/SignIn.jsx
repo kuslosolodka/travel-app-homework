@@ -22,6 +22,8 @@ function SignIn() {
     useSelector(userSelector);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
     dispatch(
       loginUser({
         email: email,
@@ -63,7 +65,7 @@ function SignIn() {
             <span className="input__heading">Email</span>
             <input
               className="email"
-              type="text"
+              type="email"
               {...register("Email", {
                 required: "Email is required",
                 pattern:
@@ -77,7 +79,7 @@ function SignIn() {
             <span className="input__heading">Password</span>
             <input
               name="password"
-              type="text"
+              type="password"
               {...register("Password", {
                 required: "Password is required.",
                 maxLength: 20,
