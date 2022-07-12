@@ -8,8 +8,8 @@ import TripPage from '../trip-page/TripPage.jsx';
 import BookingsPage from '../bookings-page/BookingsPage.jsx';
 import '../../assets/css/style.css';
 import { Route, Routes} from "react-router-dom";
-
-
+import { PrivateRoute } from '../../helpers/PrivateRoute.js';
+import Dashboard from './Dashboard.jsx';
 const App = () => (
   <>
     <Header />
@@ -20,6 +20,14 @@ const App = () => (
          <Route path='/trip/:tripId' element={<TripPage />} />
          <Route path='/bookings' element={<BookingsPage />} />
          <Route path='*' element={<Main />} />
+         <Route
+          	path='/dashboard'
+          	element={
+          		<PrivateRoute>
+          			<Dashboard />
+          		</PrivateRoute>
+          	}
+          />
        </Routes>
     <Footer />
   </>
