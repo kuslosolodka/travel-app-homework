@@ -23,7 +23,7 @@ function SignUp() {
   const { isFetching, isSuccess, isError, errorMessage } =
     useSelector(userSelector);
 
-  const handleSubmit = (e, data) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     dispatch(
@@ -76,7 +76,7 @@ function SignUp() {
           <span className="input__heading">Email</span>
           <input
             className="email"
-            type="text"
+            type="email"
             {...register("Email", {
               required: true,
               pattern:
