@@ -61,11 +61,11 @@ function Main () {
         </label>
       </form>
     </section>
+    <section className="trips">
+    <h2 className="visually-hidden">Trips List</h2>
+    <ul className="trip-list">
               {foundTravels && foundTravels.length > 0 ? (
                   foundTravels.map((travel) => (
-                    <section className="trips">
-                        <h2 className="visually-hidden">Trips List</h2>
-                      <ul className="trip-list">
                           <li className="trip-card">
                           <img src={travel.image} alt="trip image" />
                           <div className="trip-card__content">
@@ -82,12 +82,12 @@ function Main () {
                           </div>
                           <a href="/trip/:tripId" className="button">Discover a trip</a>
                           </li>
-                      </ul>
-                      </section>
                   ))
               ) : (
                   <h1 style={{textAlign: "center"}}> No results found!</h1>
               )}
+              </ul>
+              </section>
     </main>
 );
 }
