@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { Navigate } from "react-router-dom";
 
 export const signupUser = createAsyncThunk(
   "users/signupUser",
@@ -70,17 +71,17 @@ export const loginUser = createAsyncThunk(
 
 export const fetchUserBytoken = createAsyncThunk(
   "users/fetchUserByToken",
-  async ({ token }, thunkAPI) => {
+  async (thunkAPI) => {
     try {
       const response = await fetch(
         "https://travel-app-api.glitch.me/api/v1/auth/authenticated-user",
         {
           method: "GET",
-          headers: {
-            Accept: "application/json",
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
+            headers:{
+              Accept: "application/json",
+                "Content-Type":"application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            },
         }
       );
       let data = await response.json();
@@ -106,7 +107,7 @@ export const userSlice = createSlice({
     isFetching: false,
     isSuccess: false,
     isError: false,
-    errorMessage: "",
+    token: ""
   },
   reducers: {
     clearState: (state) => {
@@ -116,6 +117,10 @@ export const userSlice = createSlice({
 
       return state;
     },
+    logout:(state, action)=>{
+      localStorage.removeItem('token');
+      state.token = null;
+    }
   },
   extraReducers: {
     [signupUser.fulfilled]: (state, { payload }) => {
@@ -167,6 +172,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { clearState } = userSlice.actions;
+export const { clearState, logout } = userSlice.actions;
 
 export const userSelector = (state) => state.user;
