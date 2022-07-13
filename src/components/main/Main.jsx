@@ -3,39 +3,52 @@ import Iceland from '../../assets/images/iceland.jpg';
 import travellist from '../../local-json/travellist.json';
 import { useState, useEffect } from "react";
 import "../../assets/css/style.css";
+import { getAllTrips } from "../../features/TripSlice";
+import { useDispatch } from "react-redux/es/exports";
+import { useSelector } from "react-redux/es/exports";
+
 
 function Main () { 
-    const [name, setName] = useState('');
-    const [foundTravels, setFoundTravels] = React.useState(travellist);
-
+    // const [name, setName] = useState('');
+    // const [foundTravels, setFoundTravels] = React.useState(travellist);
+    
+    // const { isFetching, isSuccess, isError, errorMessage } =
+    // useSelector(userSelector);
+    
+    const trip = useSelector(state => state.trip);
+    const dispatch = useDispatch();
+    useEffect(()=>{
+      dispatch(getAllTrips())
+    }, [])
      
-    const searchByTitle = (e) => {
-        const keyword = e.target.value;
+    // const searchByTitle = (e) => {
+    //     const keyword = e.target.value;
       
     
-        if (keyword !== '') {
-          const results = travellist.filter((travel) => {
-            return travel.title.toLowerCase().includes(keyword.toLowerCase());
-          });
-          setFoundTravels(results);
-        } else {
-          setFoundTravels(travellist);
-        }
+    //     if (keyword !== '') {
+    //       const results = travellist.filter((travel) => {
+    //         return travel.title.toLowerCase().includes(keyword.toLowerCase());
+    //       });
+    //       setFoundTravels(results);
+    //     } else {
+    //       setFoundTravels(travellist);
+    //     }
     
-        setName(keyword);
-      };
+    //     setName(keyword);
+    //   };
     return (
     <main>
     <h1 className="visually-hidden">Travel App</h1>
     <section className="trips-filter">
       <h2 className="visually-hidden">Trips filter</h2>
-      <form className="trips-filter__form">
+      <form className="trips-filter__form"
+      >
         <label className="trips-filter__search input">
           <span className="visually-hidden">Search by name</span>
           <input  
           type="search"
-          value={name}
-          onChange={searchByTitle} 
+          // value={name}
+          // onChange={searchByTitle} 
           placeholder="search by title" />
           </label>
         
@@ -63,30 +76,34 @@ function Main () {
     </section>
     <section className="trips">
     <h2 className="visually-hidden">Trips List</h2>
-    <ul className="trip-list">
-              {foundTravels && foundTravels.length > 0 ? (
-                  foundTravels.map((travel) => (
-                          <li className="trip-card">
-                          <img src={travel.image} alt="trip image" />
+   
+    {trip.loading && <div>Loading...</div>}
+      {!trip.loading && trip.error ? <div>Error: {trip.error}</div> : null}
+      {!trip.loading && trip.trips.length ? (
+         <ul className="trip-list">
+      {trip.trips.map(trip=> (
+                          <li className="trip-card" key={trip.id}>
+                          <img  alt="trip image" />
                           <div className="trip-card__content">
                            <div className="trip-info">
-                            <h3 className="trip-info__title">{travel.title}</h3>
+                            <h3 className="trip-info__title">{trip.title}</h3>
                             <div className="trip-info__content">
-                          <span className="trip-info__duration"><strong>{travel.duration}</strong></span>
-                          <span className="trip-info__level">{travel.level}</span>
+                          <span className="trip-info__duration"><strong>{trip.duration}</strong></span>
+                          <span className="trip-info__level">{trip.level}</span>
                           </div>
                           </div>
                           <div className="trip-price">
-                          <span className="trip-price__value"> <strong className="trip-price__value">{travel.price} $ </strong></span>
+                          <span className="trip-price__value"> <strong className="trip-price__value"> {trip.price}</strong></span>
                           </div>
                           </div>
                           <a href="/trip/:tripId" className="button">Discover a trip</a>
                           </li>
-                  ))
-              ) : (
-                  <h1 style={{textAlign: "center"}}> No results found!</h1>
-              )}
+      ))}
+      
+                          
               </ul>
+              ): null}
+      
               </section>
     </main>
 );
