@@ -16,7 +16,7 @@ function SignIn() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  const { register, errors } = useForm();
+  const { register } = useForm();
 
   const { isFetching, isSuccess, isError, errorMessage } =
     useSelector(userSelector);
@@ -50,7 +50,6 @@ function SignIn() {
     }
   }, [isError, isSuccess]);
 
-  
   return (
     <>
       <main className="sign-in-page">
@@ -90,9 +89,7 @@ function SignIn() {
             />
           </label>
           <button className="button" type="submit">
-            {isFetching ? (
-              <div className="loader"></div>
-            ) : null}
+            {isFetching ? <div className="loader"></div> : null}
             Sign in
           </button>
         </form>
