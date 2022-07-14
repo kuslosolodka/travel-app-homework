@@ -1,12 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { userSlice } from '../../features/UserSlice';
-import tripReducer from '../../features/TripSlice';
-import bookingReducer from "../../features/BookingsSlice"
+import { configureStore } from "@reduxjs/toolkit";
+import { userSlice } from "../../features/UserSlice";
+import { tripSlice } from "../../features/TripSlice";
+import { bookingSlice } from "../../features/BookingsSlice";
 
 export default configureStore({
   reducer: {
     user: userSlice.reducer,
-    trip: tripReducer,
-    booking: bookingReducer
+    trip: tripSlice.reducer,
+    booking: bookingSlice.reducer,
   },
 });
