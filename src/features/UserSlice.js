@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Navigate } from "react-router-dom";
 
 export const signupUser = createAsyncThunk(
   "users/signupUser",
@@ -77,11 +76,11 @@ export const fetchUserBytoken = createAsyncThunk(
         "https://travel-app-api.glitch.me/api/v1/auth/authenticated-user",
         {
           method: "GET",
-            headers:{
-              Accept: "application/json",
-                "Content-Type":"application/json",
-                "Authorization": "Bearer " + localStorage.getItem('token')
-            },
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
         }
       );
       let data = await response.json();
@@ -102,12 +101,11 @@ export const fetchUserBytoken = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    username: "",
+    fullName: "",
     email: "",
     isFetching: false,
     isSuccess: false,
     isError: false,
-    token: ""
   },
   reducers: {
     clearState: (state) => {
@@ -117,10 +115,6 @@ export const userSlice = createSlice({
 
       return state;
     },
-    logout:(state, action)=>{
-      localStorage.removeItem('token');
-      state.token = null;
-    }
   },
   extraReducers: {
     [signupUser.fulfilled]: (state, { payload }) => {
@@ -140,7 +134,7 @@ export const userSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, { payload }) => {
       state.email = payload.email;
-      state.username = payload.fullName;
+      state.fullName = payload.fullName;
       state.isFetching = false;
       state.isSuccess = true;
       return state;
@@ -162,16 +156,16 @@ export const userSlice = createSlice({
       state.isSuccess = true;
 
       state.email = payload.email;
-      state.username = payload.fullName;
+      state.fullName = payload.fullName;
     },
     [fetchUserBytoken.rejected]: (state) => {
-      console.log("fetchUserBytoken");
+      console.log("Rejected res status");
       state.isFetching = false;
       state.isError = true;
     },
   },
 });
 
-export const { clearState, logout } = userSlice.actions;
+export const { clearState } = userSlice.actions;
 
 export const userSelector = (state) => state.user;
