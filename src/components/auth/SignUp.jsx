@@ -16,7 +16,7 @@ function SignUp() {
 
   const dispatch = useDispatch();
 
-  const { register, errors } = useForm();
+  const { register } = useForm();
 
   const navigate = useNavigate();
 
@@ -52,7 +52,6 @@ function SignUp() {
       dispatch(clearState());
     }
   }, [isSuccess, isError]);
-  // console.log(errors);
   return (
     <main className="sign-up-page">
       <h1 className="visually-hidden">Travel App</h1>
@@ -101,9 +100,7 @@ function SignUp() {
           />
         </label>
         <button className="button" type="submit">
-          {isFetching ? (
-            <div className="loader"></div>
-          ) : null}
+          {isFetching ? <div className="loader"></div> : null}
           Sign up
         </button>
       </form>
